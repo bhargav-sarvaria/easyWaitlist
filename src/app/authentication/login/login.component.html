@@ -1,0 +1,65 @@
+<!-- Template Driven Form -->
+<!-- <div class="container">
+    <form #loginForm="ngForm" (ngSubmit) = "loginUser(loginForm);">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="emailAddress" ngModel required email #emailAddress="ngModel">
+          <small class = "form-text text-muted" *ngIf="emailAddress.touched && !emailAddress.valid">Please enter email address</small>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="password" ngModel>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button>
+      </form>
+</div> -->
+
+<!-- Reactive Form -->
+<!-- <div class="container">
+  <form  [formGroup] = "loginForm" (ngSubmit)="login()">
+    <div class="row mb-3">
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="inputEmail3" formControlName="emailAddress">
+        <span *ngIf="loginForm.get('emailAddress').touched && loginForm.get('emailAddress').hasError('required')">Enter email address</span>
+        <span *ngIf="loginForm.get('emailAddress').touched && loginForm.get('emailAddress').hasError('email')">Enter valid address</span>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control" id="inputPassword3"  formControlName="password">
+      </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Sign in</button>
+  </form> 
+</div>  -->
+
+<div>
+  <div class="sidenav">
+    <div class="login-main-text">
+      <h1><strong>myWaitlist</strong><br> Login Page</h1>
+      <p>Login here to access.</p>
+    </div>
+  </div>
+  <div class="main">
+    <div class="col-md-6 col-sm-12">
+      <div class="login-form">
+          <form [formGroup] = "loginForm" (ngSubmit)="login()">
+            <div class="form-group">
+                <label>Email Id</label>
+                <input type="email" class="form-control" formControlName="emailId" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" formControlName = "password" placeholder="Password">
+            </div>
+            <button type="submit" [disabled]="!loginForm.valid" class="btn-black btn">Login</button>
+          </form>
+          <br>
+          <p>Not signed-up ? <a href="/register">Register here</a></p>
+      </div>
+    </div>
+  </div>
+</div>

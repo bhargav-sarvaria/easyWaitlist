@@ -1,0 +1,105 @@
+@import '../../../styles.scss';
+.main-head{
+    height: 150px;
+    background: #FFF;
+   
+}
+
+
+.main {
+    padding: 0px 10px;
+    height: 100%;
+    overflow: hidden;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+}
+
+@media screen and (max-width: 450px) {
+    .login-form{
+        margin-top: 10%;
+    }
+
+    .register-form{
+        margin-top: 10%;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .main{
+        margin-left: 60%; 
+    }
+
+    .sidenav{
+        width: 60%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+    .register-form{
+        margin-top: 20%;
+    }
+}
+
+
+.login-main-text{
+    margin-top: 20%;
+    padding: 60px;
+    color: #fff;
+}
+
+.login-main-text h2{
+    font-weight: 300;
+}
+
+.btn-black{
+    color: white;
+    background-color: $primary;
+}
+
+.btn-black:hover{
+    background-color: $accent;
+    color: $primary;
+    border-color: black;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.075), 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.form-control:focus, .btn-black:focus {
+    border-color: black;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.075), 0 0 8px rgba(0, 0, 0, 0.6);
+  }
+
+input.form-control.ng-invalid.ng-touched {
+    border-color: $warn;
+    box-shadow: inset 0 1px 1px rgba(255, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+.user-container {
+    background-color: white;
+}
+
+::ng-deep .mat-dialog-container {
+    background-color: white;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+// input[type=number] {
+//   -moz-appearance: textfield;
+// }
+
+label {
+ color: $primary;
+}
+
+button.close {
+    color: $primary;
+    min-width: 0 !important;
+}
+

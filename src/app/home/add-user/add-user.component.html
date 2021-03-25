@@ -1,0 +1,28 @@
+<button class="close"  mat-button (click)="onNoClick()" value='Close' title='Close'>X</button>
+<div class="user-container">
+    <div>
+        <form [formGroup] = "userForm" (ngSubmit) = "hit()">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" formControlName="name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label>Mobile No.</label>
+                <input type="number" class="form-control" formControlName="mobile_no" placeholder="Mobile No.">
+            </div>
+            
+            <div class="form-group">
+                <label>No. of Guests</label>
+                <input type="number" class="form-control" formControlName = "people" placeholder="No. of Guests">
+            </div>
+
+            <div class="form-group">
+                <label>Note</label>
+                <textarea name="note" rows="3" cols="50" class="form-control" formControlName = "note" placeholder="Note">
+                </textarea>
+            </div>
+            
+            <button type="submit" class="btn-black btn">Login</button>
+        </form>
+    </div>
+</div>

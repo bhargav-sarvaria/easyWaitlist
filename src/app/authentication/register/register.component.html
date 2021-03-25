@@ -1,0 +1,44 @@
+<div style="overflow: auto;">
+    <div class="sidenav">
+      <div class="login-main-text">
+        <h1><strong>myWaitlist</strong><br> Registration Page</h1>
+        <p>Register here to subscribe.</p>
+      </div>
+    </div>
+    <div class="main">
+      <div class="col-md-6 col-sm-12">
+        <div class="login-form">
+            <form [formGroup] = "registerForm" (ngSubmit)="register()">
+              <div class="form-group">
+                  <label>Name</label>
+                  <input type="text" class="form-control" formControlName="name" placeholder="Name">
+              </div>
+              <div class="form-group">
+                <label>Mobile No.</label>
+                <input type="number" class="form-control" formControlName="mobile_no" placeholder="Mobile No.">
+              </div>
+              <div class="form-group">
+                  <label>Email Id</label>
+                  <input type="email" class="form-control" formControlName="emailId" placeholder="Email">
+              </div>
+              <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" formControlName = "password" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <label>Re-enter Password</label>
+                <input type="password" (keyup)="onKeySearch($event)" class="form-control" formControlName = "password_verification" placeholder="Re-enter Password">
+              </div>
+              <div class="form-group">
+                  <div class="form-check">
+                      <label class="form-check-label"><input class="form-check-input"  formControlName = "terms" type="checkbox">I agree to the license terms.</label>
+                  </div>
+              </div>
+              <button type="submit" [disabled]="!registerForm.valid" class="btn-black btn">Register</button>
+            </form>
+            <br>
+            <p>Already registered ? <a href="/login">Login here</a></p>
+        </div>
+      </div>
+    </div>
+  </div>

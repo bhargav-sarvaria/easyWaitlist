@@ -1,0 +1,96 @@
+<mat-toolbar class="toolbar" style="width: 100%;">
+
+    <span>easyWaitlist</span>
+    <span class="example-spacer"></span>
+
+    <button [disabled] = "disableUi || disableUndo" mat-icon-button (click) = "undo()" class="example-icon" aria-label="Undo">
+        <mat-icon>undo</mat-icon>
+    </button>
+
+    <button [disabled] = "disableUi" mat-icon-button (click) = "openDialog()" class="example-icon" aria-label="Add a guest on Waitlist">
+        <mat-icon>add</mat-icon>
+    </button>
+    <button [disabled] = "disableUi" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button [disabled] = "disableUi" mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+        </button>
+    </mat-menu>
+</mat-toolbar>
+
+
+
+<div [ngClass]="{'freezed': disableUi === true}">
+    <div *ngFor="let user of users;let i = index"  class="card-container">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>
+                    <div >
+                        <div style="width:80%;float:left;" class="aligned-with-icon">
+                            {{user.name}}
+                        </div>
+                        <div style="width:2%;float:right;">
+                            <mat-icon  class = "pointer" aria-hidden="false" aria-label="close" (click)="removeUser(i)">close</mat-icon>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <div style="width:100%;">
+                        <div style="width:45%;float:left;">
+                            <mat-icon aria-hidden="false" aria-label="Example people icon">people</mat-icon><label class="aligned-with-icon">: {{user.people}}</label>
+                        </div>
+                        <div style="width:45%;float:left;">
+                            <mat-icon aria-hidden="false" aria-label="Example call icon">call</mat-icon><label class="aligned-with-icon">: {{user.mobile_no}}</label>
+                        </div>
+                        <div style="clear:both;"></div>
+                    </div>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content *ngIf=" user.note!='' ">
+                <p>Note: {{user.note}}.</p>
+            </mat-card-content>
+            <!-- <mat-card-actions>
+              <button mat-button>LIKE</button>
+              <button mat-button>SHARE</button>
+            </mat-card-actions> -->
+        </mat-card>
+    </div>
+</div>
+
+<!-- <div class="card-container">
+    <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>
+            <div >
+                <div style="width:98%;float:left;" class="aligned-with-icon">
+                    Bhargav Sarvaria
+                </div>
+                <div style="width:2%;float:right;">
+                    <mat-icon aria-hidden="false" aria-label="Example call icon">close</mat-icon>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <div style="width:100%;">
+                <div style="width:45%;float:left;">
+                    <mat-icon aria-hidden="false" aria-label="Example people icon">people</mat-icon><label class="aligned-with-icon">: 5</label>
+                </div>
+                <div style="width:45%;float:left;">
+                    <mat-icon aria-hidden="false" (click) = "consoleIt()" aria-label="Example call icon">call</mat-icon><label class="aligned-with-icon">: 8369398163</label>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Notes: Special request here.</p>
+        </mat-card-content>
+
+      </mat-card>
+</div> -->
