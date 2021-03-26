@@ -9,7 +9,7 @@ export class CommonService {
 
   base_url: string;
   constructor(private cookieService: CookieService) {
-    this.base_url = "http://192.168.0.112:5000";
+    this.base_url = "https://easy-waitlist-backend.herokuapp.com";
     // this.base_url = "http://localhost:9000";
    }
 
