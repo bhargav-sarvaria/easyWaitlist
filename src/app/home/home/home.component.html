@@ -21,7 +21,7 @@
     </mat-menu>
 </mat-toolbar>
 
-
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
 
 <div [ngClass]="{'freezed': disableUi === true}">
     <div *ngFor="let user of users;let i = index"  class="card-container">

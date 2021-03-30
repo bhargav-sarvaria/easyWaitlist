@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   disableUi: boolean;
   disableUndo: boolean;
   place_id: any;
+  showProgressBar: boolean;
 
   cards: any;
   targetBCR: any;
@@ -33,11 +34,14 @@ export class HomeComponent implements OnInit {
   constructor(public homeService: HomeService, private acticatedRoute: ActivatedRoute, public addUserDialog: MatDialog, public router: Router,
     private commonService: CommonService) { 
     this.disableUndo = true;
+    this.showProgressBar = false;
     this.place_id = this.commonService.getCookie('place_id');
     this.setUsers();
+    
   }
 
   setUsers(){
+    this.showProgressBar = true;
     this.disableUi = true;
     this.homeService.getWaitlist()
     .subscribe(response=>{
@@ -62,6 +66,7 @@ export class HomeComponent implements OnInit {
           requestAnimationFrame(this.update);
           this.addEventListeners();
           this.disableUi = false;
+          this.showProgressBar = false;
         },500);
 
         
@@ -80,6 +85,7 @@ export class HomeComponent implements OnInit {
   openDialog() {
     let  dialogRef = this.addUserDialog.open(AddUserComponent, {
       width: '75%',
+      data: this.users,
       disableClose: true
     });
 
@@ -91,6 +97,7 @@ export class HomeComponent implements OnInit {
           this.users.splice(this.users.length, 0, result);
 
           this.disableUi = true;
+          this.showProgressBar = true;
           this.homeService.setWaitlist(this.users, true)
           .subscribe(response=>{
             console.log('Add user Set waitlist');
@@ -130,6 +137,7 @@ export class HomeComponent implements OnInit {
     this.disableUndo = false;
 
     this.disableUi = true;
+    this.showProgressBar = true;
     this.homeService.setWaitlist(this.users, false)
     .subscribe(response=>{
       console.log('Remove User Set Waitlist');
@@ -249,6 +257,7 @@ export class HomeComponent implements OnInit {
       this.disableUndo = false;
 
       this.disableUi = true;
+      this.showProgressBar = true;
       this.homeService.setWaitlist(this.users, false)
       .subscribe(response=>{
         console.log('Slide remove user set waitlist');
@@ -272,6 +281,7 @@ export class HomeComponent implements OnInit {
       this.users.splice(this.recentlyDeleted['index'], 0, this.recentlyDeleted['user'][0]);
 
       this.disableUi = true;
+      this.showProgressBar = true;
       this.homeService.setWaitlist(this.users, false)
       .subscribe(response=>{
         console.log('Undo user set waitlist');

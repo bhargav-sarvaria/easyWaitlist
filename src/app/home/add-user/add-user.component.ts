@@ -8,10 +8,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class AddUserComponent implements OnInit {
 
-  userData = {name:'Aastha Singh', mobile_no:'8884014669'};
+  errorMessage: string;
+  userData = {};
   submitted = false;
   userForm: FormGroup;
-  constructor(@Inject(MAT_DIALOG_DATA) private dialogData: Object, private matDialogRef: MatDialogRef<AddUserComponent>,
+  constructor(@Inject(MAT_DIALOG_DATA) private users: Object, private matDialogRef: MatDialogRef<AddUserComponent>,
           private formBuilder: FormBuilder) {
     this.userForm = this.formBuilder.group({
       mobile_no: ['', [Validators.required, Validators.min(1000000000), Validators.max(9999999999)]],
@@ -19,11 +20,26 @@ export class AddUserComponent implements OnInit {
       people: ['', [Validators.required, Validators.min(1)]],
       note: ['']
     })
+    this.errorMessage = '';
    }
 
   ngOnInit(): void {
+    console.log(this.users);
   }
-  hit(){
+
+  addUser(){
+    for(let user in this.users){
+      if( this.users[user]['name'].toUpperCase() == this.userForm.value['name'].toUpperCase()){
+        this.errorMessage = 'There is already a waiting with the same name';
+        setTimeout(() => {this.errorMessage = ''},5000);
+        return;
+      }
+      if( this.users[user]['mobile_no'] == this.userForm.value['mobile_no']){
+        this.errorMessage = 'There is already a waiting with the same number';
+        setTimeout(() => {this.errorMessage = ''},5000);
+        return;
+      }
+    }
     this.matDialogRef.close();
   }
 
@@ -32,8 +48,13 @@ export class AddUserComponent implements OnInit {
     this.matDialogRef.close(this.userForm.value);
   }
 
-  onNoClick(){
+  close(){
+    this.userForm = this.formBuilder.group({
+      mobile_no: ['', [Validators.required, Validators.min(1000000000), Validators.max(9999999999)]],
+      name: ['', [Validators.required]],
+      people: ['', [Validators.required, Validators.min(1)]],
+      note: ['']
+    })
     this.matDialogRef.close();
   }
-
 }

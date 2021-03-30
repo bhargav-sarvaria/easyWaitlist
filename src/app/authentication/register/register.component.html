@@ -1,3 +1,4 @@
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
 <div style="overflow: auto;">
     <div class="sidenav">
       <div class="login-main-text">
@@ -35,6 +36,12 @@
                   </div>
               </div>
               <button type="submit" [disabled]="!registerForm.valid" class="btn-black btn">Register</button>
+              <span class="error-message" *ngIf="errorMessage!=''">
+                <svg aria-hidden="true" class="stUf5b qpSchb" fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                </svg>
+                {{errorMessage}}
+              </span>
             </form>
             <br>
             <p>Already registered ? <a href="/login">Login here</a></p>

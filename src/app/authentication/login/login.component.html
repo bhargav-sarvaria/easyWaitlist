@@ -1,41 +1,4 @@
-<!-- Template Driven Form -->
-<!-- <div class="container">
-    <form #loginForm="ngForm" (ngSubmit) = "loginUser(loginForm);">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="emailAddress" ngModel required email #emailAddress="ngModel">
-          <small class = "form-text text-muted" *ngIf="emailAddress.touched && !emailAddress.valid">Please enter email address</small>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" name="password" ngModel>
-        </div>
-        <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button>
-      </form>
-</div> -->
-
-<!-- Reactive Form -->
-<!-- <div class="container">
-  <form  [formGroup] = "loginForm" (ngSubmit)="login()">
-    <div class="row mb-3">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-      <div class="col-sm-10">
-        <input type="email" class="form-control" id="inputEmail3" formControlName="emailAddress">
-        <span *ngIf="loginForm.get('emailAddress').touched && loginForm.get('emailAddress').hasError('required')">Enter email address</span>
-        <span *ngIf="loginForm.get('emailAddress').touched && loginForm.get('emailAddress').hasError('email')">Enter valid address</span>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-      <div class="col-sm-10">
-        <input type="password" class="form-control" id="inputPassword3"  formControlName="password">
-      </div>
-    </div>
-    
-    <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Sign in</button>
-  </form> 
-</div>  -->
-
+<mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
 <div>
   <div class="sidenav">
     <div class="login-main-text">
@@ -56,6 +19,12 @@
                 <input type="password" class="form-control" formControlName = "password" placeholder="Password">
             </div>
             <button type="submit" [disabled]="!loginForm.valid" class="btn-black btn">Login</button>
+            <span class="error-message" *ngIf="errorMessage!=''">
+              <svg aria-hidden="true" class="stUf5b qpSchb" fill="currentColor" focusable="false" width="16px" height="16px" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+              </svg>
+              {{errorMessage}}
+            </span>
           </form>
           <br>
           <p>Not signed-up ? <a href="/register">Register here</a></p>

@@ -14,21 +14,23 @@ import { CommonService } from '../../common.service';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  dataLoading = false;
   error: any;
   email: string;
   password: string;
+  errorMessage: string;
+  showProgressBar: boolean;
 
   constructor(private formBuilder: FormBuilder, public authenticationService: AuthenticationService, public router: Router, private commonService: CommonService) { 
     this.loginForm = this.formBuilder.group({
       emailId: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     })
+    this.errorMessage = '';
+    this.showProgressBar = false;
   }
 
   ngOnInit(): void {
     try {
-      console.log(this.commonService.getCookie('globals'));
       var x = JSON.parse(this.commonService.getCookie('globals'));
       var place_id = this.commonService.getCookie('place_id')
 
@@ -38,13 +40,12 @@ export class LoginComponent implements OnInit {
     }
     catch(e){
       this.router.navigate(['login']);
-      console.log(e)
     }
   }
 
 
   login() {
-    this.dataLoading = true;
+    this.showProgressBar = true;
     this.email = this.loginForm.get('emailId').value;
     this.password = this.loginForm.get('password').value;
 
@@ -52,18 +53,21 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.checkLogin(this.email, encoded_password)
     .subscribe(response=>{
+      this.showProgressBar = false;
       console.log(response)
       if(response.hasOwnProperty('success') && response['success']) {
         this.authenticationService.SetCredentials(this.email, this.password);
         this.commonService.setCookie('place_id',response['_id']);
         this.router.navigate(['home']);
       } else {
-          this.error = response['message'];
-          this.dataLoading = false;
+          this.errorMessage = response['message'];
+          setTimeout(() => {this.errorMessage = ''},5000);
       }
     }, error=>{
-      this.error = error;
+      this.showProgressBar = false;
+      this.errorMessage = 'Please check your internet connection';
       console.log(error);
+      setTimeout(() => {this.errorMessage = ''},5000);
     });
   }
 

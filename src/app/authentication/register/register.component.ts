@@ -12,8 +12,9 @@ import { CommonService } from '../../common.service';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
-  dataLoading: boolean;
+  showProgressBar: boolean;
   error: any;
+  errorMessage: string;
   
   constructor(private formBuilder: FormBuilder, public authenticationService: AuthenticationService, public router: Router, private commonService: CommonService) { 
     this.registerForm = this.formBuilder.group({
@@ -24,9 +25,22 @@ export class RegisterComponent implements OnInit {
       password_verification: ['', Validators.required],
       terms: ['', Validators.required]
     })
+    this.showProgressBar = false;
+    this.errorMessage = '';
   }
 
   ngOnInit(): void {
+    try {
+      var x = JSON.parse(this.commonService.getCookie('globals'));
+      var place_id = this.commonService.getCookie('place_id')
+
+      if(place_id!= null && place_id!=''){
+        this.router.navigate(['home']);
+      }
+    }
+    catch(e){
+      this.router.navigate(['register']);
+    }
   }
 
   timeout: any = null;
@@ -53,7 +67,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.dataLoading = true;
+    this.showProgressBar = true;
     var name = this.registerForm.get('name').value;
     var mobile_no = this.registerForm.get('mobile_no').value;
     var email = this.registerForm.get('emailId').value;
@@ -70,12 +84,15 @@ export class RegisterComponent implements OnInit {
         console.log('registerd');
         this.router.navigate(['home']);
       } else {
-          this.error = response['message'];
-          this.dataLoading = false;
+          this.errorMessage = response['message'];
+          this.showProgressBar = false;
+          setTimeout(() => {this.errorMessage = ''},5000);
       }
     }, error=>{
-      this.error = error;
+      this.showProgressBar = false;
+      this.errorMessage = 'Please check your internet connection';
       console.log(error);
+      setTimeout(() => {this.errorMessage = ''},5000);
     })
   }
 
