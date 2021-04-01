@@ -14,7 +14,7 @@ export class CommonService {
     this.base_url = "https://easy-waitlist-backend.herokuapp.com";
     // this.base_url = "http://localhost:9000";
 
-    this.domain = "https://easy-waitlist.herokuapp.com";
+    this.domain = "https://easywaitlist.herokuapp.com";
     // this.domain = "http://localhost:4200";
 
    }  
