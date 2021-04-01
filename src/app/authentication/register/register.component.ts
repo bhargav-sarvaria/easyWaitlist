@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
       var place_id = this.commonService.getCookie('place_id')
 
       if(place_id!= null && place_id!=''){
-        this.router.navigate(['home']);
+        this.router.navigate(['home', { 'from_login':true }]);
       }
     }
     catch(e){
@@ -82,7 +82,7 @@ export class RegisterComponent implements OnInit {
         this.authenticationService.SetCredentials(email, password);
         this.commonService.setCookie('place_id',response['_id']);
         console.log('registerd');
-        this.router.navigate(['home']);
+        this.router.navigate(['home', { 'from_login':true }]);
       } else {
           this.errorMessage = response['message'];
           this.showProgressBar = false;

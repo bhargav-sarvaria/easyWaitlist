@@ -35,7 +35,9 @@ export class LoginComponent implements OnInit {
       var place_id = this.commonService.getCookie('place_id')
 
       if(place_id!= null && place_id!=''){
-        this.router.navigate(['home']);
+        // this.router.navigate(['home', { 'from_login':true }]);
+        this.router.navigate(['home'], { queryParams:  { 'from_login':true }, skipLocationChange: true});
+
       }
     }
     catch(e){
@@ -58,7 +60,8 @@ export class LoginComponent implements OnInit {
       if(response.hasOwnProperty('success') && response['success']) {
         this.authenticationService.SetCredentials(this.email, this.password);
         this.commonService.setCookie('place_id',response['_id']);
-        this.router.navigate(['home']);
+        // this.router.navigate(['home', { 'from_login':true }]);
+        this.router.navigate(['home'], { queryParams:  { 'from_login':true }, skipLocationChange: true});
       } else {
           this.errorMessage = response['message'];
           setTimeout(() => {this.errorMessage = ''},5000);

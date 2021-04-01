@@ -31,13 +31,20 @@ export class HomeComponent implements OnInit {
 
   paramQuery: any;
 
-  constructor(public homeService: HomeService, private acticatedRoute: ActivatedRoute, public addUserDialog: MatDialog, public router: Router,
+  constructor(public homeService: HomeService, private activatedRoute: ActivatedRoute, public addUserDialog: MatDialog, public router: Router,
     private commonService: CommonService) { 
+      activatedRoute.queryParams.subscribe(queryParams => {
+      console.log(queryParams.toString());
+      if(queryParams.hasOwnProperty('from_login') && queryParams['from_login']){
+        window.location.href = this.commonService.domain + '/home';
+      }
+    });
+
     this.disableUndo = true;
     this.showProgressBar = false;
     this.place_id = this.commonService.getCookie('place_id');
-    this.setUsers();
-    
+    this.setUsers();  
+
   }
 
   setUsers(){
@@ -67,7 +74,7 @@ export class HomeComponent implements OnInit {
           this.addEventListeners();
           this.disableUi = false;
           this.showProgressBar = false;
-        },500);
+        },1000);
 
         
       } else {

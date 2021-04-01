@@ -95,3 +95,17 @@ body {
 ::ng-deep .mat-progress-bar {
   border-radius: 2px;
 }
+
+.bottomBar {
+  overflow: hidden;
+  background-color: #d5d5d5;
+  color: black;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.img-fluid {
+  // max-width: 3% !important;
+  margin-right: 1.5% !important;
+}

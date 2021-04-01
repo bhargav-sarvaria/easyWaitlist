@@ -8,10 +8,15 @@ import { CookieService } from 'ngx-cookie-service';
 export class CommonService {
 
   base_url: string;
+  domain: string;
   constructor(private cookieService: CookieService) {
     // this.base_url = "http://192.168.0.112:5000";
     this.base_url = "https://easy-waitlist-backend.herokuapp.com";
     // this.base_url = "http://localhost:9000";
+
+    this.domain = "https://easy-waitlist.herokuapp.com";
+    // this.domain = "http://localhost:4200";
+
    }  
 
    setCookie(key, value){
