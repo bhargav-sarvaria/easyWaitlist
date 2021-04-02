@@ -5,8 +5,9 @@
         <span class="example-spacer"></span>
     </mat-toolbar>
 
+    <mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
 
-    <div class="center" *ngIf="!disableUi" >
+    <div class="center" *ngIf="!disableUi && showUi" >
         <h3>Hey {{name}}, you're on the list and will be served super soon</h3>
         <br>
         <br>
@@ -16,7 +17,7 @@
         <p>Your position on the waitlist</p>
     </div>
 
-    <div id="notfound" *ngIf="disableUi" >
+    <div id="notfound" *ngIf="disableUi && showUi" >
 		<div class="notfound">
 			<div class="notfound-404">
 				<h3>Oops! Page not found</h3>
