@@ -33,14 +33,11 @@ export class HomeService {
     return  this.httpClient.post(this.commonService.base_url + '/getWaitlist?place_id='+this.place_id, [], {headers: httpHeaders});
   }
 
-  setWaitlist(users, flag){
+  setWaitlist(users, flag, addUser, user){
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('content-type','application/json');
-    const params = { 'place_id': this.place_id, 'users': users, 'flag': flag };
-    if(flag && users.length>0){
-      params['wait_id'] = users[users.length - 1]['wait_id']
-    }
+    const params = { 'place_id': this.place_id, 'users': users, 'flag': flag, 'request_type': addUser, 'user': user };
     
     return  this.httpClient.post(this.commonService.base_url + '/setWaitlist', params, {headers: httpHeaders});
   }

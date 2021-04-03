@@ -7,14 +7,18 @@
 
     <mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
 
-    <div class="center" *ngIf="!disableUi && showUi" >
-        <h3>Hey {{name}}, you're on the list and will be served super soon</h3>
+    <div class="center" *ngIf=" !waitTimeOver && !disableUi && showUi" >
+        <h3>Hi {{name}},
+            <br>
+            Welcome to {{placeName}}
+            <br>
+            You're in the waiting and will be served soon</h3>
         <br>
         <br>
         <button mat-mini-fab style="color: white;" >{{waiting_no}}</button>
         <br>
         <br>
-        <p>Your position on the waitlist</p>
+        <p>Please track your turn here.</p>
     </div>
 
     <div id="notfound" *ngIf="disableUi && showUi" >
@@ -24,6 +28,16 @@
 				<h1><span>4</span><span>0</span><span>4</span></h1>
 			</div>
 			<h2>we are sorry, but the page you requested was not found</h2>
+            <h2>Please check your internet connection and refresh the page</h2>
+		</div>
+	</div>
+
+    <div id="notfound" *ngIf="waitTimeOver && showUi" >
+		<div class="notfound">
+			<div class="notfound-404">
+				<h3>Kudos {{name}}</h3>
+                <h2>Your wait time is over, you're no longer in the waiting.</h2>
+			</div>
 		</div>
 	</div>
 

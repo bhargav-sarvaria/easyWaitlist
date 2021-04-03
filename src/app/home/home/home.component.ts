@@ -132,7 +132,9 @@ export class HomeComponent implements OnInit {
 
           this.disableUi = true;
           this.showProgressBar = true;
-          this.homeService.setWaitlist(this.users, true)
+          var type = 'Add';
+
+          this.homeService.setWaitlist(this.users, true, type, this.users[this.users.length - 1])
           .subscribe(response=>{
             console.log('Add user Set waitlist');
             console.log(response);
@@ -179,7 +181,9 @@ export class HomeComponent implements OnInit {
 
     this.disableUi = true;
     this.showProgressBar = true;
-    this.homeService.setWaitlist(this.users, false)
+    var type = 'Remove';
+
+    this.homeService.setWaitlist(this.users, false, type, this.recentlyDeleted['user'][0])
     .subscribe(response=>{
       console.log('Remove User Set Waitlist');
       console.log(response);
@@ -304,7 +308,9 @@ export class HomeComponent implements OnInit {
 
       this.disableUi = true;
       this.showProgressBar = true;
-      this.homeService.setWaitlist(this.users, false)
+      var type = 'Remove';
+
+      this.homeService.setWaitlist(this.users, false, type, this.recentlyDeleted['user'][0])
       .subscribe(response=>{
         console.log('Slide remove user set waitlist');
         console.log(response);
@@ -336,7 +342,9 @@ export class HomeComponent implements OnInit {
 
       this.disableUi = true;
       this.showProgressBar = true;
-      this.homeService.setWaitlist(this.users, false)
+      var type = 'Undo';
+
+      this.homeService.setWaitlist(this.users, false, type, this.recentlyDeleted['user'][0])
       .subscribe(response=>{
         console.log('Undo user set waitlist');
         console.log(response);
