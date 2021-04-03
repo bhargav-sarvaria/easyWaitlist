@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'myWaitlist';
+  title = 'easyWaitlist';
 
   constructor(private cookieService: CookieService, private router: Router) { 
   }
