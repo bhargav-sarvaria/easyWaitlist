@@ -6,6 +6,7 @@
   top: 0; /* Sets the sticky toolbar to be on top */
   z-index: 1000;
   font-family: 'Cabin', sans-serif !important;
+  height: 9%;
 }
 
 .example-card {
@@ -96,6 +97,14 @@ body {
   border-radius: 2px;
 }
 
+.scrollArea{
+  overflow-y: auto;
+  position: fixed;
+  top: 9%;
+  bottom: 2.8%;
+  width: 100%;
+}
+
 .bottomBar {
   overflow: hidden;
   background-color: #d5d5d5;
@@ -103,6 +112,7 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
+  height: 2.8%
 }
 
 .img-fluid {

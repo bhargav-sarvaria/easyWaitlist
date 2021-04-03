@@ -24,59 +24,60 @@
 
 <mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
 
-<div [ngClass]="{'freezed': disableUi === true}">
-    <div *ngFor="let user of users;let i = index"  class="card-container">
-        <mat-card class="example-card">
-            <mat-card-header>
-                <mat-card-title>
-                    <div >
-                        <div style="width:80%;float:left;" class="aligned-with-icon">
-                            {{user.name}}
+<div class= "scrollArea">
+    <div [ngClass]="{'freezed': disableUi === true}">
+        <div *ngFor="let user of users;let i = index"  class="card-container">
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        <div >
+                            <div style="width:80%;float:left;" class="aligned-with-icon">
+                                {{user.name}}
+                            </div>
+                            <div style="width:2%;float:right;">
+                                <mat-icon  class = "pointer" aria-hidden="false" aria-label="close" (click)="removeUser(i)">close</mat-icon>
+                            </div>
+                            <div style="clear:both;"></div>
                         </div>
-                        <div style="width:2%;float:right;">
-                            <mat-icon  class = "pointer" aria-hidden="false" aria-label="close" (click)="removeUser(i)">close</mat-icon>
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        <div style="width:100%;">
+                            <div style="width:45%;float:left;">
+                                <mat-icon aria-hidden="false" aria-label="Example people icon">people</mat-icon><label class="aligned-with-icon">: {{user.people}}</label>
+                            </div>
+                            <div style="width:45%;float:left;">
+                                <mat-icon aria-hidden="false" aria-label="Example call icon">call</mat-icon><label class="aligned-with-icon">: {{user.mobile_no}}</label>
+                            </div>
+                            <div style="clear:both;"></div>
                         </div>
-                        <div style="clear:both;"></div>
-                    </div>
-                </mat-card-title>
-                <mat-card-subtitle>
-                    <div style="width:100%;">
-                        <div style="width:45%;float:left;">
-                            <mat-icon aria-hidden="false" aria-label="Example people icon">people</mat-icon><label class="aligned-with-icon">: {{user.people}}</label>
-                        </div>
-                        <div style="width:45%;float:left;">
-                            <mat-icon aria-hidden="false" aria-label="Example call icon">call</mat-icon><label class="aligned-with-icon">: {{user.mobile_no}}</label>
-                        </div>
-                        <div style="clear:both;"></div>
-                    </div>
-                </mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content *ngIf=" user.note!='' ">
-                <p>Note: {{user.note}}.</p>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</div>
-
-<div id="notfound" *ngIf="errorUi" >
-    <div class="notfound">
-        <div class="notfound-404">
-            <h3>Oops! Page not found</h3>
-            <h1><span>4</span><span>0</span><span>4</span></h1>
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content *ngIf=" user.note!='' ">
+                    <p>Note: {{user.note}}.</p>
+                </mat-card-content>
+            </mat-card>
         </div>
-        <h2>Please check your internet connection and refresh the page.</h2>
+    </div>
+
+    <div id="notfound" *ngIf="errorUi" >
+        <div class="notfound">
+            <div class="notfound-404">
+                <h3>Oops! Page not found</h3>
+                <h1><span>4</span><span>0</span><span>4</span></h1>
+            </div>
+            <h2>Please check your internet connection and refresh the page.</h2>
+        </div>
+    </div>
+    
+    <div id="notfound" *ngIf="noUsers" >
+        <div class="notfound">
+            <h2>Your Waitlist is empty
+                <br>
+                Tap the + icon to add people on waitlist
+            </h2>
+        </div>
     </div>
 </div>
-
-<div id="notfound" *ngIf="noUsers" >
-    <div class="notfound">
-        <h2>Your Waitlist is empty
-            <br>
-            Tap the + icon to add people on waitlist
-        </h2>
-    </div>
-</div>
-
 
 <div class="bottomBar">
     <div style="float:left;text-align:center;width:100%;">&copy; 2021 easyWaitlist. All rights reserved.</div>
