@@ -54,13 +54,29 @@
             <mat-card-content *ngIf=" user.note!='' ">
                 <p>Note: {{user.note}}.</p>
             </mat-card-content>
-            <!-- <mat-card-actions>
-              <button mat-button>LIKE</button>
-              <button mat-button>SHARE</button>
-            </mat-card-actions> -->
         </mat-card>
     </div>
 </div>
+
+<div id="notfound" *ngIf="errorUi" >
+    <div class="notfound">
+        <div class="notfound-404">
+            <h3>Oops! Page not found</h3>
+            <h1><span>4</span><span>0</span><span>4</span></h1>
+        </div>
+        <h2>Please check your internet connection and refresh the page.</h2>
+    </div>
+</div>
+
+<div id="notfound" *ngIf="noUsers" >
+    <div class="notfound">
+        <h2>Your Waitlist is empty
+            <br>
+            Tap the + icon to add people on waitlist
+        </h2>
+    </div>
+</div>
+
 
 <div class="bottomBar">
     <div style="float:left;text-align:center;width:100%;">&copy; 2021 easyWaitlist. All rights reserved.</div>
