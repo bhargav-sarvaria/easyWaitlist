@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddUserComponent } from '../add-user/add-user.component';
 import { CommonService } from '../../common.service';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   users: any;
   recentlyDeleted: {};
+  majorError: boolean = false;
   errorUi: boolean;
   noUsers: boolean;
   disableUi: boolean;
@@ -36,8 +38,13 @@ export class HomeComponent implements OnInit {
   paramQuery: any;
 
   constructor(public homeService: HomeService, private activatedRoute: ActivatedRoute, public addUserDialog: MatDialog, public router: Router,
-    private commonService: CommonService, private snackaBar: MatSnackBar) {
-      activatedRoute.queryParams.subscribe(queryParams => {
+    private commonService: CommonService, private snackaBar: MatSnackBar, updates: SwUpdate) {
+    
+    updates.available.subscribe(event => {
+      updates.activateUpdate().then(() => document.location.reload());
+    });
+      
+    activatedRoute.queryParams.subscribe(queryParams => {
       console.log(queryParams.toString());
       if(queryParams.hasOwnProperty('from_login') && queryParams['from_login']){
         window.location.href = this.commonService.domain + '/home';
@@ -66,13 +73,12 @@ export class HomeComponent implements OnInit {
     this.disableUi = true;
     this.homeService.getWaitlist()
     .subscribe(response=>{
+      this.majorError = false;
+      var resp = response['body']
       console.log('Get waitlist reponse');
-      console.log(response);
-      if(response.hasOwnProperty('success') && response['success']) {
-        this.errorUi = false;
-
-        // this.users = response['data'];
-        this.users = JSON.parse(response['data']);
+      console.log(resp);
+      if(resp.hasOwnProperty('success') && resp['success']) {
+        this.users = JSON.parse(resp['data']);
         if(this.users.length > 0){
           this.noUsers = false;
         }else{
@@ -105,7 +111,7 @@ export class HomeComponent implements OnInit {
       }
     }, error=>{
       this.showProgressBar = false;
-      this.errorUi = true;
+      this.majorError = true;
       console.log(error);
     });
     
@@ -148,6 +154,7 @@ export class HomeComponent implements OnInit {
           }, error=>{
             this.showProgressBar = false;
             this.errorUi = true;
+            setTimeout(() => {this.setUsers(null)},500);
             console.log(error);
           });
 
@@ -194,6 +201,7 @@ export class HomeComponent implements OnInit {
       }
     }, error=>{
       this.showProgressBar = false;
+      setTimeout(() => {this.setUsers(null)},500);
       this.errorUi = true;
       console.log(error);
     });
@@ -321,6 +329,7 @@ export class HomeComponent implements OnInit {
         }
       }, error=>{
         this.showProgressBar = false;
+        setTimeout(() => {this.setUsers(null)},500);
         this.errorUi = true;
         console.log(error);
       });
@@ -360,6 +369,7 @@ export class HomeComponent implements OnInit {
         } 
       }, error=>{
         this.showProgressBar = false;
+        setTimeout(() => {this.setUsers(null)},500);
         this.errorUi = true;
         console.log(error);
       });

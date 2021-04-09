@@ -25,6 +25,11 @@
 <mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
 
 <div class= "scrollArea">
+
+    <div class='errorUi' *ngIf="errorUi">
+        Please check your internet connection and <a href="." style="color: black;text-decoration: underline;">refresh</a> the page to modify waitlist
+    </div>
+
     <div [ngClass]="{'freezed': disableUi === true}">
         <div *ngFor="let user of users;let i = index"  class="card-container">
             <mat-card class="example-card">
@@ -59,7 +64,7 @@
         </div>
     </div>
 
-    <div id="notfound" *ngIf="errorUi" >
+    <div id="notfound" *ngIf="majorError" >
         <div class="notfound">
             <div class="notfound-404">
                 <h3>Oops! Page not found</h3>

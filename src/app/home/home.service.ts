@@ -28,9 +28,7 @@ export class HomeService {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('content-type','application/json');
 
-    const params = { place_id: this.place_id};
-    
-    return  this.httpClient.post(this.commonService.base_url + '/getWaitlist?place_id='+this.place_id, [], {headers: httpHeaders});
+    return  this.httpClient.get(this.commonService.base_url + '/getWaitlist?place_id='+this.place_id,  {headers: httpHeaders, observe: 'response'});
   }
 
   setWaitlist(users, flag, addUser, user){

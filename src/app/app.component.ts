@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import {Router} from "@angular/router";
+import {SwUpdate} from "@angular/service-worker";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,10 @@ import {Router} from "@angular/router";
 export class AppComponent implements OnInit {
   title = 'easyWaitlist';
 
-  constructor(private cookieService: CookieService, private router: Router) { 
+  constructor(private cookieService: CookieService, private router: Router, updates: SwUpdate) { 
+    updates.available.subscribe(event => {
+      updates.activateUpdate().then(() => document.location.reload());
+    });
   }
 
   ngOnInit(): void {

@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import { NgForm, FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
 import { CommonService } from '../../common.service';
+import {SwUpdate} from '@angular/service-worker';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,13 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
   showProgressBar: boolean;
 
-  constructor(private formBuilder: FormBuilder, public authenticationService: AuthenticationService, public router: Router, private commonService: CommonService) { 
+  constructor(private formBuilder: FormBuilder, public authenticationService: AuthenticationService,
+     public router: Router, private commonService: CommonService, updates: SwUpdate) { 
+    
+    updates.available.subscribe(event => {
+      updates.activateUpdate().then(() => document.location.reload());
+    });
+
     this.loginForm = this.formBuilder.group({
       emailId: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
