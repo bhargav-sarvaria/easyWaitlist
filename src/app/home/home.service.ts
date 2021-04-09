@@ -24,6 +24,13 @@ export class HomeService {
     this.commonService.deleteCookie('place_id');
   }
 
+  checkConnectivity(){
+    const httpHeaders = new HttpHeaders();
+    httpHeaders.append('content-type','application/json');
+
+    return  this.httpClient.get(this.commonService.base_url + '/checkConnectivity',  {headers: httpHeaders});
+  }
+
   getWaitlist(){
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('content-type','application/json');

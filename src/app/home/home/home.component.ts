@@ -118,8 +118,27 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkConnectivity();
     window.addEventListener('load', () => this.setUsers(null));
   }
+
+  checkConnectivity(){
+    
+    this.homeService.checkConnectivity().subscribe(response=>{
+      this.majorError = false;
+      console.log('check connectivity');
+      console.log(response);
+      if(response.hasOwnProperty('success') && response['success']) {      
+        this.errorUi = false;
+      } else {
+        this.errorUi = true;
+      }
+    }, error=>{
+      this.errorUi = true;
+    });
+    
+  }
+
   openDialog() {
     if(this.openedSnackbar){this.openedSnackbar.dismiss();}
     
