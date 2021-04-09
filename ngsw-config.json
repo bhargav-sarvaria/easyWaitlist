@@ -52,6 +52,16 @@
         "maxAge": "1h",
         "timeout": "5s"
       }
+    },
+    {
+      "name": "wailits-api",
+      "urls": ["https://easywaitlist.herokuapp.com/getWaitlist"],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 20,
+        "maxAge": "1d",
+        "timeout": "5s"
+      }
     }
   ]
 }
