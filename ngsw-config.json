@@ -55,7 +55,7 @@
     },
     {
       "name": "wailits-api-heroku",
-      "urls": ["https://easy-waitlist-backend.herokuapp.com"],
+      "urls": ["https://easy-waitlist-backend.herokuapp.com/getWaitlist"],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 20,
