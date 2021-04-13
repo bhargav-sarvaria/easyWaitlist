@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit {
 
     this.disableUndo = true;
     this.errorUi = false;
+    this.disableUi = false;
     this.showProgressBar = false;
     this.place_id = this.commonService.getCookie('place_id');
     this.setUsers(null);
@@ -130,11 +131,14 @@ export class HomeComponent implements OnInit {
       console.log(response);
       if(response.hasOwnProperty('success') && response['success']) {      
         this.errorUi = false;
+        this.disableUi = false;
       } else {
         this.errorUi = true;
+        this.disableUi = true;
       }
     }, error=>{
       this.errorUi = true;
+      this.disableUi = true;
     });
     
   }
@@ -165,6 +169,7 @@ export class HomeComponent implements OnInit {
             console.log(response);
             if(response.hasOwnProperty('success') && response['success']) {
               this.errorUi = false;
+              this.disableUi = false;
               this.recentlyDeleted = {};
               this.disableUndo = true;
               var snackbar = {message: result['name']+' added on the waitlist',  action:'Dismiss'};
@@ -173,6 +178,7 @@ export class HomeComponent implements OnInit {
           }, error=>{
             this.showProgressBar = false;
             this.errorUi = true;
+            this.disableUi = true;
             setTimeout(() => {this.setUsers(null)},500);
             console.log(error);
           });
@@ -215,6 +221,7 @@ export class HomeComponent implements OnInit {
       console.log(response);
       if(response.hasOwnProperty('success') && response['success']) {
         this.errorUi = false;
+        this.disableUi = false;
         var snackbar = {message: this.recentlyDeleted['user'][0]['name'] + ' removed from the waitlist',  action: 'Undo'};
         setTimeout(() => {this.setUsers(snackbar)},500);
       }
@@ -222,6 +229,7 @@ export class HomeComponent implements OnInit {
       this.showProgressBar = false;
       setTimeout(() => {this.setUsers(null)},500);
       this.errorUi = true;
+      this.disableUi = true;
       console.log(error);
     });
     
@@ -343,6 +351,7 @@ export class HomeComponent implements OnInit {
         console.log(response);
         if(response.hasOwnProperty('success') && response['success']) {
           this.errorUi = false;
+          this.disableUi = false;
           var snackbar = {message: this.recentlyDeleted['user'][0]['name'] + ' removed from the waitlist',  action:'Undo'};
           setTimeout(() => {this.setUsers(snackbar)},500);
         }
@@ -350,6 +359,7 @@ export class HomeComponent implements OnInit {
         this.showProgressBar = false;
         setTimeout(() => {this.setUsers(null)},500);
         this.errorUi = true;
+        this.disableUi = true;
         console.log(error);
       });
 
@@ -379,6 +389,7 @@ export class HomeComponent implements OnInit {
         if(response.hasOwnProperty('success') && response['success']) {
           
           this.errorUi = false;
+          this.disableUi = false;
           this.animateOtherCardsOuttoPosition(this.recentlyDeleted['index']);
           this.recentlyDeleted = {};
           this.disableUndo = true;
@@ -390,6 +401,7 @@ export class HomeComponent implements OnInit {
         this.showProgressBar = false;
         setTimeout(() => {this.setUsers(null)},500);
         this.errorUi = true;
+        this.disableUi = true;
         console.log(error);
       });
 
