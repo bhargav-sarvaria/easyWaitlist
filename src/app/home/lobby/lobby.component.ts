@@ -18,13 +18,11 @@ export class LobbyComponent implements OnInit {
   waitTimeOver: true;
   showUi: boolean;
   name: any;
-  baseUrl: string;
   showProgressBar: boolean;
   x: any;
 
   constructor(private lobbyService: LobbyService, public commonService: CommonService, private acticatedRoute: ActivatedRoute) { 
       
-      this.baseUrl = this.commonService.base_url;
       this.x = null;
       this.showProgressBar = true;
       this.showUi = false;
@@ -83,7 +81,7 @@ export class LobbyComponent implements OnInit {
 
   startLiveUpdate(){
       
-      this.lobbyService.fetchWaitingNumber(this.baseUrl, this.place_id, this.wait_id).then((response) => {
+      this.lobbyService.fetchWaitingNumber(this.place_id, this.wait_id).then((response) => {
         if (response.ok) {
           return response.json();
         } else {
@@ -93,7 +91,7 @@ export class LobbyComponent implements OnInit {
         console.log('Get waitlist pos reponse');
         console.log(responseJson);
         if(responseJson.hasOwnProperty('success') && responseJson['success']) {
-          var waitings = JSON.parse(responseJson['data']);
+          var waitings = responseJson['data'];
           var present = false;
           if(waitings.length > 0 ){
             for (let [index, value] of waitings.entries()) {

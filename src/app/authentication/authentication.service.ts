@@ -21,7 +21,7 @@ export class AuthenticationService {
     const params = { name: name, mobile_no: mobile_no, email: email, password: password};
     console.log(params);
 
-    return  this.httpClient.post(this.commonService.base_url + '/register', params, {headers: httpHeaders});
+    return  this.httpClient.post('api/register', params, {headers: httpHeaders});
   }
   
   checkLogin(email: string, password: string){
@@ -31,7 +31,7 @@ export class AuthenticationService {
 
     const params = { email: email, password: password};
     
-    return  this.httpClient.post(this.commonService.base_url + '/login', params, {headers: httpHeaders});
+    return  this.httpClient.post('api/login', params, {headers: httpHeaders});
   }
 
   SetCredentials(username, password) {

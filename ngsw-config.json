@@ -34,8 +34,8 @@
   ],
   "dataGroups": [
     {
-      "name": "jokes-api",
-      "urls": ["https://api.chucknorris.io/jokes/random"],
+      "name": "wailits-api",
+      "urls": ["http://localhost:8080/api/getWaitlist"],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 20,
@@ -45,7 +45,7 @@
     },
     {
       "name": "wailits-api",
-      "urls": ["http://192.168.0.112:5000/getWaitlist"],
+      "urls": ["/api/getWaitlist"],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 20,
