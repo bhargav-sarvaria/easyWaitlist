@@ -20,19 +20,20 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     // uncomment to make Login Compulsory
-    try {
-      var x = JSON.parse(this.cookieService.get('globals'));
-      var place_id = this.cookieService.get('place_id');
+    // console.log('stopper');
+    // try {
+    //   var x = JSON.parse(this.cookieService.get('globals'));
+    //   var place_id = this.cookieService.get('place_id');
 
-      if(!(x.hasOwnProperty('currentUser') && x['currentUser'].hasOwnProperty('authdata'))){
-        this.router.navigate(['login']);
-      } else if(place_id!= null && place_id!=''){
-        this.router.navigate(['home'], { queryParams:  { 'from_login':true }, skipLocationChange: true});
-      }
-    }
-    catch(e){
-      this.router.navigate(['login']);
-      console.log(e)
-    }
+    //   if(!(x.hasOwnProperty('currentUser') && x['currentUser'].hasOwnProperty('authdata'))){
+    //     this.router.navigate(['login']);
+    //   } else if(place_id!= null && place_id!=''){
+    //     this.router.navigate(['home/'+place_id]);
+    //   }
+    // }
+    // catch(e){
+    //   this.router.navigate(['login']);
+    //   console.log(e)
+    // }
   }
 }

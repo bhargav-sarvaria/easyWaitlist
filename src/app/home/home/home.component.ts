@@ -40,6 +40,17 @@ export class HomeComponent implements OnInit {
   constructor(public homeService: HomeService, private activatedRoute: ActivatedRoute, public addUserDialog: MatDialog, public router: Router,
     private commonService: CommonService, private snackaBar: MatSnackBar, updates: SwUpdate) {
     
+    try {
+      var x = JSON.parse(this.commonService.getCookie('globals'));
+      if(!(x.hasOwnProperty('currentUser') && x['currentUser'].hasOwnProperty('authdata'))){
+        this.router.navigate(['login']);
+      }
+    }
+    catch(e){
+      this.router.navigate(['login']);
+      console.log(e)
+    }
+    
     updates.available.subscribe(event => {
       updates.activateUpdate().then(() => document.location.reload());
     });
@@ -58,6 +69,18 @@ export class HomeComponent implements OnInit {
     this.place_id = this.commonService.getCookie('place_id');
     this.setUsers(null);
 
+  }
+  
+  ngOnInit(): void {
+    window.addEventListener('online', () => {
+      this.errorUi = false;
+      this.disableUi = false;
+    });
+    window.addEventListener('offline', () => {
+      this.errorUi = true;
+      this.disableUi = true;
+    });
+    window.addEventListener('load', () => this.setUsers(null));
   }
 
   openSnackbar(message, action){
@@ -115,18 +138,6 @@ export class HomeComponent implements OnInit {
       console.log(error);
     });
     
-  }
-
-  ngOnInit(): void {
-    window.addEventListener('online', () => {
-      this.errorUi = false;
-      this.disableUi = false;
-    });
-    window.addEventListener('offline', () => {
-      this.errorUi = true;
-      this.disableUi = true;
-    });
-    window.addEventListener('load', () => this.setUsers(null));
   }
 
   openDialog() {
