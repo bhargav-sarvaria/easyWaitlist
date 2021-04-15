@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
       if(!(x.hasOwnProperty('currentUser') && x['currentUser'].hasOwnProperty('authdata'))){
         this.router.navigate(['login']);
       } else if(place_id!= null && place_id!=''){
-        this.router.navigate(['home/'+place_id]);
+        this.router.navigate(['home'], { queryParams:  { 'from_login':true }, skipLocationChange: true});
       }
     }
     catch(e){
