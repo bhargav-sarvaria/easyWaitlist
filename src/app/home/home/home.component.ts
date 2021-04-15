@@ -75,11 +75,10 @@ export class HomeComponent implements OnInit {
     this.homeService.getWaitlist()
     .subscribe(response=>{
       this.majorError = false;
-      var resp = response['body']
       console.log('Get waitlist reponse');
-      console.log(resp);
-      if(resp.hasOwnProperty('success') && resp['success']) {
-        this.users = JSON.parse(resp['data']);
+      console.log(response);
+      if(response.hasOwnProperty('success') && response['success']) {
+        this.users = response['data'];
         if(this.users.length > 0){
           this.noUsers = false;
         }else{
@@ -119,28 +118,15 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.checkConnectivity();
-    window.addEventListener('load', () => this.setUsers(null));
-  }
-
-  checkConnectivity(){
-    
-    this.homeService.checkConnectivity().subscribe(response=>{
-      this.majorError = false;
-      console.log('check connectivity');
-      console.log(response);
-      if(response.hasOwnProperty('success') && response['success']) {      
-        this.errorUi = false;
-        this.disableUi = false;
-      } else {
-        this.errorUi = true;
-        this.disableUi = true;
-      }
-    }, error=>{
+    window.addEventListener('online', () => {
+      this.errorUi = false;
+      this.disableUi = false;
+    });
+    window.addEventListener('offline', () => {
       this.errorUi = true;
       this.disableUi = true;
     });
-    
+    window.addEventListener('load', () => this.setUsers(null));
   }
 
   openDialog() {

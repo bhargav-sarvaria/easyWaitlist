@@ -28,14 +28,14 @@ export class HomeService {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('content-type','application/json');
 
-    return  this.httpClient.get(this.commonService.base_url + '/checkConnectivity',  {headers: httpHeaders});
+    return  this.httpClient.get(this.commonService.api + '/checkConnectivity',  {headers: httpHeaders});
   }
 
   getWaitlist(){
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('content-type','application/json');
 
-    return  this.httpClient.get(this.commonService.base_url + '/getWaitlist?place_id='+this.place_id,  {headers: httpHeaders, observe: 'response'});
+    return  this.httpClient.get('/api/getWaitlist?place_id='+this.place_id,  {headers: httpHeaders});
   }
 
   setWaitlist(users, flag, addUser, user){
@@ -44,6 +44,6 @@ export class HomeService {
     httpHeaders.append('content-type','application/json');
     const params = { 'place_id': this.place_id, 'users': users, 'flag': flag, 'request_type': addUser, 'user': user };
     
-    return  this.httpClient.post(this.commonService.base_url + '/setWaitlist', params, {headers: httpHeaders});
+    return  this.httpClient.post('/api/setWaitlist', params, {headers: httpHeaders});
   }
 }
