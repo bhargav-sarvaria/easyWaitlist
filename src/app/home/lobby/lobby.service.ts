@@ -41,4 +41,11 @@ export class LobbyService {
     const params = { 'place_id': place_id, 'wait_id': wait_id};
     return  this.httpClient.post('/api/isServed', params, {headers: httpHeaders});
   }
+
+  updatePushKeys(place_id, place_name, wait_id, body_data){
+    const httpHeaders = new HttpHeaders();
+    httpHeaders.append('content-type','application/json');
+    const params = { 'place_id': place_id, 'place_name': place_name, 'wait_id': wait_id, 'credential': body_data};
+    return  this.httpClient.post('/api/updatePushKeys', params, {headers: httpHeaders});
+  }
 }

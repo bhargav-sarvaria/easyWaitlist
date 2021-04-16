@@ -17,7 +17,6 @@ export class CommonService {
     this.domain = "https://easywaitlist.herokuapp.com";
     // this.domain = "http://localhost:4200";
     // this.domain = "http://127.0.0.1:8080";
-    // this.domain = "http://localhost:8080";
    }  
 
    setCookie(key, value){
