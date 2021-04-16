@@ -7,6 +7,7 @@ const SMS_URL = "https://www.fast2sms.com/dev/bulk";
 const MongoClient = require('mongodb').MongoClient;
 const common = require('../utils/common')
 const axios = require('axios');
+const notification = require('../utils/Notification');
 
 
 var database = null;
@@ -156,6 +157,40 @@ router.post('/getPlaceName', async (req, res) => {
         });
     }catch(err){
         res.json({error: true, message:'Couldn\'t find mentioned place'});
+    } 
+});
+
+router.post('/updatePushKeys', async (req, res) => {
+    try{
+        var collection = req.body.place_id + ' notification'
+        var insert_data = { wait_id: req.body.wait_id, place_name: req.body.place_name, credential: req.body.credential};
+
+        database.collection(collection).findOne({wait_id: req.body.wait_id}, function(err, result) {
+            if(result == null){ 
+                database.collection(collection).insertOne( insert_data, function(err, result) { if (err) console.log(err.message); });
+            }
+        });
+    }catch(err){
+        console.log(err.message);
+    } 
+    res.status(200);
+});
+
+router.post('/sendNotification', async (req, res) => {
+    try{
+        var collection = req.body.place_id + ' notification'
+        var wait_id = String(req.body.wait_id);
+
+        database.collection(collection).findOne({wait_id: wait_id}, function(err, result) {
+            if (err) res.json({error: true, message:'Couldn\'t find mentioned waiting'});
+            if(result != null){ 
+                notification.sendNotification(result.place_name, result.credential);
+            }
+            res.json({success: true});
+        });
+    res.status(200);
+    }catch(err){
+        console.log(err.message);
     } 
 });
 

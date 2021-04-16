@@ -46,4 +46,12 @@ export class HomeService {
     
     return  this.httpClient.post('/api/setWaitlist', params, {headers: httpHeaders});
   }
+
+  notifyUser(place_id, wait_id){
+    const httpHeaders = new HttpHeaders();
+    httpHeaders.append('content-type','application/json');
+    const params = { 'place_id': place_id, 'wait_id': wait_id };
+    
+    return  this.httpClient.post('/api/sendNotification', params, {headers: httpHeaders});
+  }
 }

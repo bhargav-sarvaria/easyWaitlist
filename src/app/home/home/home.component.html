@@ -35,14 +35,19 @@
             <mat-card class="example-card">
                 <mat-card-header>
                     <mat-card-title>
-                        <div >
-                            <div style="width:80%;float:left;" class="aligned-with-icon">
-                                {{user.name}}
-                            </div>
-                            <div style="width:2%;float:right;">
+                        <div style="width: 100%;">  
+                            <div style="float: left;">
+                                <div style="margin-top: 2.5px;">
+                                    {{user.name}}
+                                </div>
+                            </div>  
+                            <div style="float: left;margin-left: 2%;">
+                                <mat-icon class = "pointer" aria-hidden="false" aria-label="notify" (click)="notifyUser(user.wait_id)">phonelink_ring</mat-icon>
+                            </div>  
+                            <div style="float: right;">
                                 <mat-icon  class = "pointer" aria-hidden="false" aria-label="close" (click)="removeUser(i)">close</mat-icon>
-                            </div>
-                            <div style="clear:both;"></div>
+                            </div>  
+                            <div style="clear: both;"></div>  
                         </div>
                     </mat-card-title>
                     <mat-card-subtitle>

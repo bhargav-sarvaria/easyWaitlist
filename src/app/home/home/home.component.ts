@@ -83,6 +83,16 @@ export class HomeComponent implements OnInit {
     window.addEventListener('load', () => this.setUsers(null));
   }
 
+  notifyUser(wait_id){
+    console.log('Wait id sent: '+ wait_id);
+    this.homeService.notifyUser(this.place_id, wait_id).subscribe(response=>{
+      console.log('Notify User ');
+      console.log(response);
+    }, error=>{
+      console.log(error);
+    });
+  }
+
   openSnackbar(message, action){
     this.openedSnackbar = this.snackaBar.open(message, action, {duration: 2000});
     this.openedSnackbar.onAction().subscribe(()=>{
