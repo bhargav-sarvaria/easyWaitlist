@@ -1,12 +1,7 @@
 const webpush = require('web-push');
 
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
-
-// const PUBLIC_KEY = process.env.NOTIFICATION_PUBLIC_KEY;
-// const PRIVATE_KEY = process.env.NOTIFICATION_PRIVATE_KEY;
-
-const PUBLIC_KEY = 'BPi3By2R0nFqzVlxVOOjym-co_hFY2QuOzT41mP_NTYchfVpyN1Z4FANRXy5XpTYJ6dfSaS2BfPvx_lwvfL3u4s';
-const PRIVATE_KEY = 'Wgp0yFBYeIUFk9Ie1qRzfV-OKjAhqX7MGKVmRjCDels';
+const PUBLIC_KEY = process.env.NOTIFICATION_PUBLIC_KEY;
+const PRIVATE_KEY = process.env.NOTIFICATION_PRIVATE_KEY;
 
 webpush.setVapidDetails('mailto:bhargav.sarvaria@gmail.com', PUBLIC_KEY, PRIVATE_KEY);
 
@@ -30,6 +25,8 @@ var payload = {
   }  
 };
 
+// webpush.sendNotification(sub, JSON.stringify(payload));
+
 function sendNotification(place_name, credential) {
     var payload = {
         notification: {
@@ -44,5 +41,3 @@ function sendNotification(place_name, credential) {
 }
 
 module.exports.sendNotification = sendNotification;
-
-// webpush.sendNotification(sub, JSON.stringify(payload));
