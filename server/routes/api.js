@@ -162,14 +162,24 @@ router.post('/getPlaceName', async (req, res) => {
 
 router.post('/updatePushKeys', async (req, res) => {
     try{
-        var collection = req.body.place_id + ' notification'
-        var insert_data = { wait_id: req.body.wait_id, place_name: req.body.place_name, credential: req.body.credential};
 
-        database.collection(collection).findOne({wait_id: req.body.wait_id}, function(err, result) {
+        var place_id = req.body.place_id; var wait_id = req.body.wait_id;var place_name = req.body.place_name;
+
+        var collection = place_id + ' notification'
+        var insert_data = { wait_id: wait_id, place_name: place_name, credential: req.body.credential};
+
+        database.collection(collection).findOne({wait_id: wait_id}, function(err, result) {
             if(result == null){ 
                 database.collection(collection).insertOne( insert_data, function(err, result) { if (err) console.log(err.message); });
+            
+                var myquery = { wait_id: wait_id };
+                var newvalues = { $set: { notification: true } };
+                database.collection(place_id + ' served').updateOne(myquery, newvalues, function(err, res) {
+                    if (err) console.log(err.message);
+                });
             }
         });
+
     }catch(err){
         console.log(err.message);
     } 
@@ -250,27 +260,11 @@ router.post('/setWaitlist', async (req, res) => {
                                     }, {
                                         headers: { "authorization" : SMS_KEY, "Content-Type" : 'application/json', "Cache-Control" : 'no-cache' }
                                     })
-                                    .then((response) => {
-                                        if(response.data.hasOwnProperty('return') && response.data.return ){
-                                            res.json({success: true});
-                                        }else{
-                                            res.json({error: true});
-                                        }
-
-                                    }, (error) => {
-                                        console.log(error.message)
-                                        res.json(error);
-                                    });
-
-                                }else{
-                                    res.json({ error: true});
-                                }     
-                            }).catch((error) => {
-                                res.status(500).send(error);
-                            })
-                        }else{
-                            res.json({success: true});
+                                    .then((response) => { }, (error) => { console.log(error.message); });
+                                }    
+                            }).catch((error) => { console.log(error.message); })
                         }
+                        res.json({success: true});
                     }
                 });}
             });

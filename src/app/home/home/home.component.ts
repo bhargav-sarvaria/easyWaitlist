@@ -164,6 +164,7 @@ export class HomeComponent implements OnInit {
         if(result.name != ''){
           result['wait_id'] = new Date().getTime();
           result['position'] = this.users.length + 1;
+          result['notification'] = null;
           this.users.splice(this.users.length, 0, result);
 
           this.disableUi = true;

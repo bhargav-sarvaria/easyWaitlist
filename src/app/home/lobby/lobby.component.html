@@ -20,8 +20,9 @@
         <br>
         <p>Please track your turn here.</p>
         <br>
+        <br>
         <p *ngIf= "!isNotificationEnabled && !isNotificationBlocked" >Please <a (click)="pushSubscription()" style="text-decoration: underline;">allow</a> us to send you notification when it's your turn</p>
-        <p *ngIf= "isNotificationBlocked">Kindly enable notifications by clicking lock symbol next to the URL</p>
+        <p *ngIf= "isNotificationBlocked">Kindly enable notifications by clicking the lock symbol next to the URL</p>
         <p *ngIf= "isNotificationBlocked">It helps us notify you when your turn has arrived</p>
     </div>
 
