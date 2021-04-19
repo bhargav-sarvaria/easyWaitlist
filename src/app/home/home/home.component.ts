@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   disableUi: boolean;
   disableUndo: boolean;
   place_id: any;
+  place_name: any;
   showProgressBar: boolean;
   openedSnackbar: any;
 
@@ -67,6 +68,7 @@ export class HomeComponent implements OnInit {
     this.disableUi = false;
     this.showProgressBar = false;
     this.place_id = this.commonService.getCookie('place_id');
+    this.place_name = this.commonService.getCookie('place_name');
     this.setUsers(null);
 
   }
@@ -83,13 +85,27 @@ export class HomeComponent implements OnInit {
     window.addEventListener('load', () => this.setUsers(null));
   }
 
-  notifyUser(wait_id){
-    console.log('Wait id sent: '+ wait_id);
+  notifyUser(wait_id, name){
+    this.openSnackbar('Sending notofication to ' +name, 'Dismiss');
     this.homeService.notifyUser(this.place_id, wait_id).subscribe(response=>{
-      console.log('Notify User ');
+      console.log('Notify User');
       console.log(response);
+      this.openSnackbar(response['message'] + ' to '+name, 'Dismiss');
     }, error=>{
-      console.log(error);
+      console.log(error.message);
+      this.openSnackbar('Error while notifying ' +name, 'Dismiss');
+    });
+  }
+
+  messageUser(wait_id, name){
+    this.openSnackbar('Sending message to ' +name, 'Dismiss');
+    this.homeService.messageUser(this.place_id, wait_id, this.place_name).subscribe(response=>{
+      console.log('Message User');
+      console.log(response);
+      this.openSnackbar(response['message'], 'Dismiss');
+    }, error=>{
+      console.log(error.message);
+      this.openSnackbar('Error while sending message to ' +name, 'Dismiss');
     });
   }
 
@@ -165,6 +181,7 @@ export class HomeComponent implements OnInit {
           result['wait_id'] = new Date().getTime();
           result['position'] = this.users.length + 1;
           result['notification'] = null;
+          result['message'] = null;
           this.users.splice(this.users.length, 0, result);
 
           this.disableUi = true;

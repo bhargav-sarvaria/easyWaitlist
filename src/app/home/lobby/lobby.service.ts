@@ -48,4 +48,11 @@ export class LobbyService {
     const params = { 'place_id': place_id, 'place_name': place_name, 'wait_id': wait_id, 'credential': body_data};
     return  this.httpClient.post('/api/updatePushKeys', params, {headers: httpHeaders});
   }
+
+  notificationPermission(place_id, wait_id){
+    const httpHeaders = new HttpHeaders();
+    httpHeaders.append('content-type','application/json');
+
+    return  this.httpClient.get('/api/checkNotificationPermission?wait_id='+wait_id+'&place_id='+place_id,  {headers: httpHeaders});
+  }
 }

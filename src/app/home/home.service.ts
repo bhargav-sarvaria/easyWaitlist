@@ -54,4 +54,12 @@ export class HomeService {
     
     return  this.httpClient.post('/api/sendNotification', params, {headers: httpHeaders});
   }
+
+  messageUser(place_id, wait_id, place_name){
+    const httpHeaders = new HttpHeaders();
+    httpHeaders.append('content-type','application/json');
+    const params = { 'place_id': place_id, 'wait_id': wait_id, 'place_name': place_name };
+    
+    return  this.httpClient.post('/api/sendMessage', params, {headers: httpHeaders});
+  }
 }

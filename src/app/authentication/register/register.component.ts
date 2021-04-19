@@ -81,6 +81,7 @@ export class RegisterComponent implements OnInit {
       if(response.hasOwnProperty('success') && response['success']) {
         this.authenticationService.SetCredentials(email, password);
         this.commonService.setCookie('place_id',response['_id']);
+        this.commonService.setCookie('place_name',name);
         console.log('registerd');
         this.router.navigate(['home', { 'from_login':true }]);
       } else {
