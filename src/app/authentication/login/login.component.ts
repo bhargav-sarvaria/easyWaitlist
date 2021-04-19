@@ -66,7 +66,8 @@ export class LoginComponent implements OnInit {
       console.log(response)
       if(response.hasOwnProperty('success') && response['success']) {
         this.authenticationService.SetCredentials(this.email, this.password);
-        this.commonService.setCookie('place_id',response['_id']);
+        this.commonService.setCookie('place_id', response['_id']);
+        this.commonService.setCookie('place_name', response['place_name']);
         // this.router.navigate(['home', { 'from_login':true }]);
         this.router.navigate(['home'], { queryParams:  { 'from_login':true }, skipLocationChange: true});
       } else {

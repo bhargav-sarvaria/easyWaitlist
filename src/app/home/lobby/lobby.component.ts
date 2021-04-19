@@ -55,6 +55,7 @@ export class LobbyComponent implements OnInit {
             this.showProgressBar = false;
             if(response.hasOwnProperty('success') && response['success']) {
               this.placeName = response['place_name'];
+              this.notificationPermission();
               this.startLiveUpdate();
               this.x = setInterval(()=> {this.startLiveUpdate();}, 5000 )
             } 
@@ -69,6 +70,35 @@ export class LobbyComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  notificationPermission(){
+    this.lobbyService.notificationPermission(this.place_id, this.wait_id).subscribe(response=>{
+      console.log(JSON.stringify(response));
+      if(response.hasOwnProperty('success')) {
+        if(response['flag']){
+          console.log('Flag is true');
+          this.swPush.requestSubscription({ serverPublicKey: this.publicKey }).then( sub => { 
+            this.isNotificationEnabled = true;
+            this.isNotificationBlocked = false;
+
+            this.lobbyService.updatePushKeys(this.place_id, this.placeName, this.wait_id, sub).subscribe(response=>{
+              console.log('Set credential response: ' + JSON.stringify(response))      
+            }, error=>{ console.log(error) });
+           }).catch(err => {
+            if( err.toString().includes('denied') ){
+              this.isNotificationEnabled = false;
+              this.isNotificationBlocked = true;
+            }
+          });
+          
+        }else{
+          console.log('Flag is false');
+          this.isNotificationEnabled = false;
+        }
+      }
+    }, error=>{ console.log(error) });
+  }
+
+
   pushSubscription(){
     console.log('Sw Notitication Enabled is: ' +this.swPush.isEnabled);
     console.log('Sw Notitication Subscription is: ' + JSON.stringify(this.swPush.subscription));
@@ -77,9 +107,7 @@ export class LobbyComponent implements OnInit {
       return;
     }
 
-    this.swPush.requestSubscription({
-      serverPublicKey: this.publicKey
-    }).then(sub => {
+    this.swPush.requestSubscription({ serverPublicKey: this.publicKey }).then( sub => {
       console.log('Got sub');
   
       this.isNotificationEnabled = true;

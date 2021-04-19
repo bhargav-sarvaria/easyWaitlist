@@ -42,7 +42,10 @@
                                 </div>
                             </div>  
                             <div style="float: left;margin-left: 2%;">
-                                <mat-icon *ngIf="user.notification" class = "pointer" aria-hidden="false" aria-label="notify" (click)="notifyUser(user.wait_id)">phonelink_ring</mat-icon>
+                                <mat-icon *ngIf="user.notification" class = "pointer" aria-hidden="false" aria-label="notify" (click)="notifyUser(user.wait_id, user.name)">phonelink_ring</mat-icon>
+                            </div> 
+                            <div style="float: left;margin-left: 2%;" [ngClass]="{'freezed': user.messageSent === true, 'iconDisable': user.messageSent === true}">
+                                <mat-icon *ngIf="user.message" class = "pointer" aria-hidden="false" aria-label="notify" (click)="messageUser(user.wait_id, user.name)">message</mat-icon>
                             </div>  
                             <div style="float: right;">
                                 <mat-icon  class = "pointer" aria-hidden="false" aria-label="close" (click)="removeUser(i)">close</mat-icon>

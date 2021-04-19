@@ -45,7 +45,7 @@ router.post('/login', async (req, res) => {
                 res.json({error: true, message:'Couldn\'t find your email address'});
             }else{
                 if(req.body.password == result.password){
-                    res.json({success: true, _id: String(result._id)});
+                    res.json({success: true, _id: String(result._id), place_name: result.name});
                 }else{
                     res.json({error: true, message:'The password entered is incorrect'});
                 }
@@ -70,7 +70,6 @@ router.post('/register', async (req, res) => {
                 users.insertOne(myobj, function(err, result) {
                     if (err) res.json({ message: err.message});
                     if(result.hasOwnProperty('insertedCount')){
-                        console.log(result.insertedCount)
                         if(result.insertedCount){
                             res.json({success: true, '_id': hash});
                         }else{
@@ -108,31 +107,6 @@ router.get('/getWaitlist', async (req, res) => {
     } 
 });
 
-router.get('/test', async(req, res) => {
-    var shortLink = 'http://yeh.le';
-
-    axios.post(SMS_URL, {
-        sender_id: 'CHKSMS',
-        language: 'english',
-        route: 'p',
-        numbers: '8369398163',
-        message: 'Hi ' + ', \nTrack your possition in waiting through the below link.\n' + shortLink
-    }, {
-        headers: {
-            "authorization" : SMS_KEY,
-            "Content-Type" : 'application/json',
-            "Cache-Control" : 'no-cache'
-        }
-      })
-    .then((response) => {
-        console.log(response.data);
-        res.json(response.data.return);
-    }, (error) => {
-        console.log(error.message)
-        res.json(error);
-    });
-});
-
 router.get('/getWaitlistPos', async (req, res) => {
     try{
         var place_id  = req.query.place_id;
@@ -165,16 +139,16 @@ router.post('/updatePushKeys', async (req, res) => {
 
         var place_id = req.body.place_id; var wait_id = req.body.wait_id;var place_name = req.body.place_name;
 
-        var collection = place_id + ' notification'
+        var collection = place_id + ' notification';
         var insert_data = { wait_id: wait_id, place_name: place_name, credential: req.body.credential};
 
         database.collection(collection).findOne({wait_id: wait_id}, function(err, result) {
             if(result == null){ 
                 database.collection(collection).insertOne( insert_data, function(err, result) { if (err) console.log(err.message); });
             
-                var myquery = { wait_id: wait_id };
+                var myquery = { wait_id: parseInt(wait_id) };
                 var newvalues = { $set: { notification: true } };
-                database.collection(place_id + ' served').updateOne(myquery, newvalues, function(err, res) {
+                database.collection(place_id).updateOne(myquery, newvalues, function(err, res) {
                     if (err) console.log(err.message);
                 });
             }
@@ -186,22 +160,81 @@ router.post('/updatePushKeys', async (req, res) => {
     res.status(200);
 });
 
+router.get('/checkNotificationPermission', async (req, res) => {
+    try{
+        var place_id = req.query.place_id; var wait_id = String(req.query.wait_id);
+        var collection = place_id + ' notification'
+        
+        await database.collection(collection).find({wait_id: wait_id}).toArray(function(err, result) {
+            if (err) res.json({ error: true});
+            if(result!= null){
+                res.json({success: true, flag: true});
+            }else{
+                res.json({success: true, flag: false});
+            }
+        });
+    }catch(err){
+        res.json({ error: true});
+    } 
+});
+
 router.post('/sendNotification', async (req, res) => {
     try{
         var collection = req.body.place_id + ' notification'
         var wait_id = String(req.body.wait_id);
 
         database.collection(collection).findOne({wait_id: wait_id}, function(err, result) {
-            if (err) res.json({error: true, message:'Couldn\'t find mentioned waiting'});
-            if(result != null){ 
-                notification.sendNotification(result.place_name, result.credential);
-            }
-            res.json({success: true});
+            if (err) res.json({error: true, message:'Couldn\'t send notification'});
+            if(result != null){
+                var flag = notification.sendNotification(result.place_name, result.credential);
+                
+                // return response if notification was sent
+                flag.then( notificationFlag => {
+                    if(notificationFlag){
+                        res.json({success: true, message:'Notification sent'});
+                    }else{
+                        res.json({error: true, message:'Couldn\'t send notification'});
+                    }
+                }).catch( err=>{
+                    console.log(err);
+                    res.json({error: true, message:'Couldn\'t send notification'});
+                });
+            }else{ res.json({error: true, message:'Couldn\'t send notification'}); }
         });
-    res.status(200);
     }catch(err){
         console.log(err.message);
+        res.json({error: true, message:'Couldn\'t send notification'});
     } 
+});
+
+router.post('/sendMessage', async (req, res) => {
+    try{
+        var place_id = req.body.place_id; var place_name = req.body.place_name; var wait_id = String(req.body.wait_id);
+
+        database.collection(place_id).findOne({wait_id: parseInt(wait_id)}, function(err, result) {
+            if (err) res.json({error: true, message:'Couldn\'t find mentioned waiting'});
+            if(result != null){ 
+                var flag = notification.sendMessage(place_name, result.mobile_no);
+                flag.then( messageFlag => {
+                    if(messageFlag){
+                        var myquery = { wait_id: parseInt(wait_id) }; var newvalues = { $set: { messageSent: true } };
+                        database.collection(place_id).updateOne(myquery, newvalues, function(err) { if (err) console.log(err.message); });
+                        res.json({success: true, message:'Message sent to '+ result.name});
+                    }else{
+                        res.json({error: true, message:'Couldn\'t send message to '+ result.name});
+                    }
+                }).catch( err=>{
+                    console.log(err);
+                });
+            }else{
+                res.json({error: true, message:'Couldn\'t find mentioned waiting'});
+            }
+        });
+    }catch(err){
+        console.log(err.message);
+        res.json({error: true, message:'Couldn\'t find mentioned waiting'});
+    } 
+    
 });
 
 router.post('/isServed', async (req, res) => {
@@ -260,7 +293,12 @@ router.post('/setWaitlist', async (req, res) => {
                                     }, {
                                         headers: { "authorization" : SMS_KEY, "Content-Type" : 'application/json', "Cache-Control" : 'no-cache' }
                                     })
-                                    .then((response) => { }, (error) => { console.log(error.message); });
+                                    .then((response) => {
+                                        if(response.data.hasOwnProperty('message') && response.data.message == 'SMS sent successfully.'){
+                                            var myquery = { wait_id: parseInt(user.wait_id) }; var newvalues = { $set: { message: true } };
+                                            database.collection(place_id).updateOne(myquery, newvalues, function(err) { if (err) console.log(err.message); });
+                                        }
+                                    }, (error) => { console.log(error.message); });
                                 }    
                             }).catch((error) => { console.log(error.message); })
                         }

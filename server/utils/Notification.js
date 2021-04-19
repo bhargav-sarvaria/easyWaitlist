@@ -1,5 +1,7 @@
 const webpush = require('web-push');
-
+const SMS_KEY = process.env.SMS_KEY;
+const SMS_URL = "https://www.fast2sms.com/dev/bulk";
+const axios = require('axios');
 const PUBLIC_KEY = process.env.NOTIFICATION_PUBLIC_KEY;
 const PRIVATE_KEY = process.env.NOTIFICATION_PRIVATE_KEY;
 
@@ -27,7 +29,7 @@ var payload = {
 
 // webpush.sendNotification(sub, JSON.stringify(payload));
 
-function sendNotification(place_name, credential) {
+const sendNotification = async (place_name, credential) => {
     var payload = {
         notification: {
           body: 'Please reach out at ' + place_name + ', your turn is here.',
@@ -37,7 +39,56 @@ function sendNotification(place_name, credential) {
           vibrate: [100, 50, 100]
       }  
     };
-    webpush.sendNotification(credential, JSON.stringify(payload));
+    // webpush.sendNotification(credential, JSON.stringify(payload));
+
+    var promise = await new Promise( (resol, reject) => { 
+      webpush.sendNotification(credential, JSON.stringify(payload)).then(data => {
+        console.log('push service', JSON.stringify(data));
+        resol(true);
+      }).catch(err => {
+        
+        console.log(err.message);
+        console.log(err.statusCode);
+
+        if (err.statusCode === 410 || err.statusCode === 404) {
+          console.log('410');
+        }
+        resol(false);
+      });
+    });
+
+    return promise;
 }
 
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+
+
 module.exports.sendNotification = sendNotification;
+
+const sendMessage = async (place_name, mobile_no) => {
+
+  var promise = await new Promise( (resol, reject) => {
+    axios.post(SMS_URL, {
+      sender_id: 'CHKSMS',
+      language: 'english',
+      route: 'p',
+      numbers: mobile_no,
+      message: 'Your Wait is Over!!\nPlease reach out at ' + place_name + ', your turn is here.'
+    }, {
+      headers: { "authorization" : SMS_KEY, "Content-Type" : 'application/json', "Cache-Control" : 'no-cache' }
+    })
+    .then((response) => {
+      if(response.data.hasOwnProperty('message') && response.data.message == 'SMS sent successfully.'){
+        resol(true);
+      }else{
+        resol(false)
+      }
+    }, (error) => { 
+      console.log(error.message);
+      resol(false);
+    });
+  });
+  return promise;
+}
+
+module.exports.sendMessage = sendMessage;
