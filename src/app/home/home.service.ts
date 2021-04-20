@@ -22,6 +22,7 @@ export class HomeService {
   logout(){
     this.commonService.deleteCookie('globals');
     this.commonService.deleteCookie('place_id');
+    this.commonService.deleteCookie('place_name');
   }
 
   checkConnectivity(){

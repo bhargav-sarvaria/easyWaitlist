@@ -20,7 +20,7 @@ export class CommonService {
    }  
 
    setCookie(key, value){
-    this.cookieService.set(key, value);
+    this.cookieService.set(key, value, {expires: 7, sameSite: 'Lax'});
   }
 
   getCookie(key){
@@ -29,6 +29,10 @@ export class CommonService {
 
   deleteCookie(key){
     this.cookieService.delete(key);
+  }
+
+  getAllCookies(){
+    return this.cookieService.getAll();
   }
 }
 
