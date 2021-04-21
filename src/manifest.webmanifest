@@ -4,8 +4,17 @@
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
+  "orientation": "portrait",
   "scope": "./",
   "start_url": "./index.html",
+  "categories": ["utilities"],
+  "shortcuts" : [
+    {
+      "name": "My Waitlist",
+      "url": "/home",
+      "description": "List of people waiting to be served"
+    }
+  ],
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
