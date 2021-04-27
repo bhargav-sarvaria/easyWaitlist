@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       emailId: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
-    })
+    });
     this.errorMessage = '';
     this.showProgressBar = false;
   }

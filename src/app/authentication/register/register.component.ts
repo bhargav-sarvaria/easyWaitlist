@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = 'Please check your internet connection';
       console.log(error);
       setTimeout(() => {this.errorMessage = ''},5000);
-    })
+    });
   }
 
 }
