@@ -8,3 +8,6 @@ An Angular application to manage Queues efficiently and allowing guests to track
 - Send push notification to guests when their turn arrives
 
 ![](https://github.com/bhargav-sarvaria/myWaitlist/blob/main/Demo.gif)
+
+## Guest Screen
+![](https://github.com/bhargav-sarvaria/myWaitlist/blob/main/Demo.png)
