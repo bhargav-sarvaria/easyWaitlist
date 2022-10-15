@@ -1,6 +1,6 @@
 # myWaitlist
 
-An Angular application to manage Queues efficiently and allowing guests to track their position on the waitlist.
+An Angular application to manage Queues efficiently and allow guests to track their position in the waitlist.
 
 ## Features
 - Swipe to Delete card list to add and remove guests on the waitlist
