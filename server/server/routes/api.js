@@ -1,5 +1,5 @@
 const express = require('express');
-const uri = "mongodb+srv://digitalshelfplatform:Ascent123A@digitalshelfplatform.wpkbc.mongodb.net/?retryWrites=true&w=majority";
+const uri = "";
 // const cuttly_key = process.env.CUTTLY_KEY;
 const SMS_KEY = process.env.SMS_KEY;
 const APP_URL = 'http://localhost:4200/';
