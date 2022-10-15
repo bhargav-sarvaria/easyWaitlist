@@ -7,44 +7,46 @@
 
     <mat-progress-bar mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
 
-    <div class="center" *ngIf=" !waitTimeOver && !disableUi && showUi" >
+    <div class="center" *ngIf=" !waitTimeOver && !disableUi && showUi">
         <h3>Hi {{name}},
             <br>
             Welcome to {{placeName}}
             <br>
-            You're in the waiting and will be served soon</h3>
+            You're in the Queue and will be served soon
+        </h3>
         <br>
         <br>
-        <button mat-mini-fab style="color: white;" >{{waiting_no}}</button>
+        <button mat-mini-fab style="color: white;">{{waiting_no}}</button>
         <br>
         <br>
         <p>Please track your turn here.</p>
         <br>
         <br>
-        <p *ngIf= "!isNotificationEnabled && !isNotificationBlocked" ><a (click)="pushSubscription()" class="pointer">Allow</a> us to send you notification when it's your turn.</p>
-        <p *ngIf= "isNotificationBlocked">Kindly enable notifications by clicking the lock symbol next to the URL</p>
-        <p *ngIf= "isNotificationBlocked">It helps us notify you when your turn has arrived</p>
+        <p *ngIf="!isNotificationEnabled && !isNotificationBlocked"><a (click)="pushSubscription()"
+                class="pointer">Allow</a> us to send you notification when it's your turn.</p>
+        <p *ngIf="isNotificationBlocked">Kindly enable notifications by clicking the lock symbol next to the URL</p>
+        <p *ngIf="isNotificationBlocked">It helps us notify you when your turn has arrived</p>
     </div>
 
-    <div id="notfound" *ngIf="disableUi && showUi" >
-		<div class="notfound">
-			<div class="notfound-404">
-				<h3>Oops! Page not found</h3>
-				<h1><span>4</span><span>0</span><span>4</span></h1>
-			</div>
-			<h2>we are sorry, but the page you requested was not found</h2>
+    <div id="notfound" *ngIf="disableUi && showUi">
+        <div class="notfound">
+            <div class="notfound-404">
+                <h3>Oops! Page not found</h3>
+                <h1><span>4</span><span>0</span><span>4</span></h1>
+            </div>
+            <h2>we are sorry, but the page you requested was not found</h2>
             <h2>Please check your internet connection and refresh the page</h2>
-		</div>
-	</div>
+        </div>
+    </div>
 
-    <div id="notfound" *ngIf="waitTimeOver && showUi" >
-		<div class="notfound">
-			<div class="notfound-404">
-				<h3>Kudos {{name}}</h3>
+    <div id="notfound" *ngIf="waitTimeOver && showUi">
+        <div class="notfound">
+            <div class="notfound-404">
+                <h3>Kudos {{name}}</h3>
                 <h2>Your wait time is over, you're no longer in the waiting.</h2>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

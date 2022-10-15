@@ -13,17 +13,15 @@ import { LobbyComponent } from './home/lobby/lobby.component';
 import { AddUserComponent } from './home/add-user/add-user.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {Ng2TelInputModule} from 'ng2-tel-input';
-
 
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,7 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';  
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -41,14 +39,13 @@ import { environment } from '../environments/environment';
     RegisterComponent,
     HomeComponent,
     LobbyComponent,
-    AddUserComponent
+    AddUserComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    Ng2TelInputModule,
     HttpClientModule,
     BrowserAnimationsModule,
     HammerModule,
@@ -67,13 +64,13 @@ import { environment } from '../environments/environment';
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    })
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [
-    {provide: LocationStrategy, useClass: PathLocationStrategy },
-    CookieService
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    CookieService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

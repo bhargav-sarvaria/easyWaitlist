@@ -1,5 +1,0 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target" : { "namespace": "android_app", "package_name": "com.herokuapp.easywaitlist.twa",
-                   "sha256_cert_fingerprints": ["32:40:72:FC:80:72:58:31:23:A0:1A:01:95:A8:75:50:59:9E:D7:14:31:60:48:E9:AB:9D:04:97:6F:FC:45:E5"] }
-    }]

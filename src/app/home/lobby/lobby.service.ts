@@ -3,56 +3,86 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CommonService } from '../../common.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LobbyService {
+  constructor(
+    private httpClient: HttpClient,
+    private commonService: CommonService
+  ) {}
 
-  constructor(private httpClient: HttpClient,  private commonService: CommonService) { }
-
-  getWaitlistPos(place_id: any, wait_id: any){
+  getWaitlistPos(place_id: any, wait_id: any) {
     const httpHeaders = new HttpHeaders();
-    httpHeaders.append('content-type','application/json');
+    httpHeaders.append('content-type', 'application/json');
 
-    const params = { 'place_id': place_id, 'wait_id': wait_id};
-    
-    return  this.httpClient.post('/api/getWaitlistPos', params, {headers: httpHeaders});
+    const params = { place_id: place_id, wait_id: wait_id };
+
+    return this.httpClient.post(
+      'http://localhost:8080/api/getWaitlistPos',
+      params,
+      { headers: httpHeaders }
+    );
   }
 
-  getPlaceName(place_id: any){
+  getPlaceName(place_id: any) {
     const httpHeaders = new HttpHeaders();
-    httpHeaders.append('content-type','application/json');
-    const params = { 'place_id': place_id};
-    return  this.httpClient.post('/api/getPlaceName', params, {headers: httpHeaders});
+    httpHeaders.append('content-type', 'application/json');
+    const params = { place_id: place_id };
+    return this.httpClient.post(
+      'http://localhost:8080/api/getPlaceName',
+      params,
+      { headers: httpHeaders }
+    );
   }
 
-  fetchWaitingNumber(place_id, wait_id){
-    return fetch('/api/getWaitlistPos?place_id='+place_id,{
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    })
+  fetchWaitingNumber(place_id, wait_id) {
+    return fetch(
+      'http://localhost:8080/api/getWaitlistPos?place_id=' + place_id,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
   }
 
-  isServed(place_id, wait_id){
+  isServed(place_id, wait_id) {
     const httpHeaders = new HttpHeaders();
-    httpHeaders.append('content-type','application/json');
-    const params = { 'place_id': place_id, 'wait_id': wait_id};
-    return  this.httpClient.post('/api/isServed', params, {headers: httpHeaders});
+    httpHeaders.append('content-type', 'application/json');
+    const params = { place_id: place_id, wait_id: wait_id };
+    return this.httpClient.post('http://localhost:8080/api/isServed', params, {
+      headers: httpHeaders,
+    });
   }
 
-  updatePushKeys(place_id, place_name, wait_id, body_data){
+  updatePushKeys(place_id, place_name, wait_id, body_data) {
     const httpHeaders = new HttpHeaders();
-    httpHeaders.append('content-type','application/json');
-    const params = { 'place_id': place_id, 'place_name': place_name, 'wait_id': wait_id, 'credential': body_data};
-    return  this.httpClient.post('/api/updatePushKeys', params, {headers: httpHeaders});
+    httpHeaders.append('content-type', 'application/json');
+    const params = {
+      place_id: place_id,
+      place_name: place_name,
+      wait_id: wait_id,
+      credential: body_data,
+    };
+    return this.httpClient.post(
+      'http://localhost:8080/api/updatePushKeys',
+      params,
+      { headers: httpHeaders }
+    );
   }
 
-  notificationPermission(place_id, wait_id){
+  notificationPermission(place_id, wait_id) {
     const httpHeaders = new HttpHeaders();
-    httpHeaders.append('content-type','application/json');
+    httpHeaders.append('content-type', 'application/json');
 
-    return  this.httpClient.get('/api/checkNotificationPermission?wait_id='+wait_id+'&place_id='+place_id,  {headers: httpHeaders});
+    return this.httpClient.get(
+      'http://localhost:8080/api/checkNotificationPermission?wait_id=' +
+        wait_id +
+        '&place_id=' +
+        place_id,
+      { headers: httpHeaders }
+    );
   }
 }
