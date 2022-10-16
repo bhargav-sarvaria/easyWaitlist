@@ -1,4 +1,4 @@
-# myWaitlist
+# easyWaitlist
 
 An Angular application to manage Queues efficiently and allow guests to track their position in the waitlist.
 
